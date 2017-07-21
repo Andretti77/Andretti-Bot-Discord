@@ -1,11 +1,17 @@
 import discord 
 from discord.ext.commands import Bot
 
+import requests
 
 bot = Bot(command_prefix = "~")
 
+
+
+
+
+
 @bot.event
-async def on_read():
+async def on_ready():
 	print("Logged in")
 
 
@@ -17,5 +23,11 @@ async def hello(*args):
 @bot.command()
 async def goodbye(*args):
 	return await bot.say("Goodbye!")
+
+
+#@bot.command()
+#async def youtube(url)
+#	if url.contents.starts
+
 
 bot.run("MzM3OTczMjM1NTAzMjAyMzA1.DFOptQ.lSWcXTTnDkY4Igoua0zJNXrX5YU")
