@@ -6,7 +6,7 @@ import requests
 from bs4 import BeautifulSoup
 import asyncio as asyncio
 import random
-
+import Treasure
 
 client = discord.Client()
 
@@ -52,7 +52,7 @@ async def roll(message):
         elif dice == "d4":
                 dice_roll = random.randint(1,5)
         elif dice == "d100":
-                duce_roll = random.randint(1,101)
+                dice_roll = random.randint(1,101)
         
         return await client.send_message(message.channel, dice_roll)
 
@@ -71,4 +71,4 @@ async def on_message(message):
 
 
 
-client.run("MzM3OTczMjM1NTAzMjAyMzA1.DFOptQ.lSWcXTTnDkY4Igoua0zJNXrX5YU")
+client.run(Treasure.KEY)
