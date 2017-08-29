@@ -5,8 +5,9 @@ from urllib.request import urlopen
 import requests
 from bs4 import BeautifulSoup
 import asyncio as asyncio
+import random
 
-#bot = Bot(command_prefix = "~")
+
 client = discord.Client()
 
 
@@ -16,17 +17,17 @@ async def on_ready():
         await client.change_presence(game=Game(name="Under Construction"))
 
         
-#@bot.command()
+
 async def hello(message):
        return await client.send_message(message.channel,"Hello!")
 
 
-#@bot.command()
+
 async def goodbye(message):
         return await client.send_message(message.channel,"Goodbye!")
 
 
-#@bot.command()
+
 async def youtube(message):
         results = []
         temp = message.content.replace("~youtube ","")
@@ -39,6 +40,22 @@ async def youtube(message):
                 results.append('https://www.youtube.com' + vids['href'])
         return await client.send_message(message.channel, results[0])
 
+async def roll(message):
+        dice = message.content.replace("~roll ", "")
+
+        if dice == "d20":
+               dice_roll = random.randint(1,21) 
+        elif dice == "d6":
+                dice_roll = random.randint(1,7)
+        elif dice == "d10":
+                dice_roll = random.randint(1,11)
+        elif dice == "d4":
+                dice_roll = random.randint(1,5)
+        elif dice == "d100":
+                duce_roll = random.randint(1,101)
+        
+        return await client.send_message(message.channel, dice_roll)
+
 
 @client.event
 async def on_message(message):
@@ -49,7 +66,8 @@ async def on_message(message):
                 await goodbye(message)
         elif message.content.startswith("~youtube"):
                 await youtube(message) 
-
+        elif message.content.startswith("~roll"):
+                await roll(message)
 
 
 
