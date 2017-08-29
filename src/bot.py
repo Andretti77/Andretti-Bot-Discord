@@ -68,7 +68,18 @@ async def on_message(message):
                 await youtube(message) 
         elif message.content.startswith("~roll"):
                 await roll(message)
+        elif message.content.startswith("~help"):
+                help_message = []
+                help_message.append("All commands start with ~.\n")
+                help_message.append("~hello : A greeting.\n")
+                help_message.append("~goodbye : A farewell.\n")                    
+                help_message.append("~youtube: Searches YouTube and returns a link to the top result.")
+                help_message.append("Format: ~youtube <Search Terms>\n")
+                help_message.append("~roll : rolls a collection of dice. Dice include: d20, d6, d10, d4, d100")
+                help_message.append("Format: ~roll <one dice listed above>\n")
 
+                final_message = '\n'.join(help_message)
+                await client.send_message(message.channel, final_message)
 
 
 client.run(Treasure.KEY)
