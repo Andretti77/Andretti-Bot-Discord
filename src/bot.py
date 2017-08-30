@@ -8,8 +8,13 @@ import asyncio as asyncio
 import random
 import Treasure
 
+from weather import Weather
+
+
+
 client = discord.Client()
 
+weather = Weather()
 
 @client.event
 async def on_ready():
@@ -56,6 +61,14 @@ async def roll(message):
         
         return await client.send_message(message.channel, dice_roll)
 
+async def get_weather(message):
+        weather = Weather()
+        place = message.content.replace("~weather ", "")
+        loc = weather.lookup_by_location(place)
+        w = loc.condition()
+        
+        return await client.send_message(message.channel, w['text']+"\n"+w['temp']+" Degrees Fahrenheit")
+
 
 @client.event
 async def on_message(message):
@@ -68,6 +81,8 @@ async def on_message(message):
                 await youtube(message) 
         elif message.content.startswith("~roll"):
                 await roll(message)
+        elif message.content.startswith("~weather"):
+                await get_weather(message)
         elif message.content.startswith("~help"):
                 help_message = []
                 help_message.append("All commands start with ~.\n")
@@ -77,7 +92,9 @@ async def on_message(message):
                 help_message.append("Format: ~youtube <Search Terms>\n")
                 help_message.append("~roll : rolls a collection of dice. Dice include: d20, d6, d10, d4, d100")
                 help_message.append("Format: ~roll <one dice listed above>\n")
-
+                help_message.append("~weather: current weather for a location")
+                help_message.append("Format: ~weather <location>\n")
+                
                 final_message = '\n'.join(help_message)
                 await client.send_message(message.channel, final_message)
 
